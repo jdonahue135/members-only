@@ -5,7 +5,7 @@ const { sanitizeBody } = require('express-validator/filter');
 
 // Display login form on GET
 exports.user_login_get = function(req, res) {
-    //TODO
+    res.render('login_form', { title: 'Log In' });
 };
 
 // Handle login on POST
