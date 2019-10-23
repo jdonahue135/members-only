@@ -1,6 +1,7 @@
 var User = require('../models/user');
 
 const passport = require("passport");
+const bcrypt = require("bcrypt");
 
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
@@ -13,7 +14,7 @@ exports.user_login_get = function(req, res) {
 // Handle login on POST
 exports.user_login_post = function(req, res) {
     passport.authenticate('local', {
-        successRedirect: "/login/",
+        successRedirect: "/",
         failureRedirect: "/login/" + req.body.username
     })
 };
@@ -43,15 +44,24 @@ exports.user_signup_post = (req, res, next) => {
     sanitizeBody('username').escape(),
     sanitizeBody('password').escape(),
     sanitizeBody('confirm_password').escape(),
-    
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-      if (err) return next(err);
-      const user = new User({
-        username: req.body.username,
-        password: hashedPassword
-      }).save(err => {
+
+    //Verify that username does not already exist
+    User.findOne( { username: req.body.username }, (err, user) => {
         if (err) return next(err);
-        res.redirect("/");
-      });
+        if (user) {
+            res.redirect("/signup", {message: 'usernamer already exists'});
+        }
+        bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+            if (err) return next(err);
+            const user = new User({
+              username: req.body.username,
+              password: hashedPassword,
+              first_name: req.body.first_name,
+              last_name: req.body.last_name,
+            }).save(err => {
+              if (err) return next(err);
+              res.redirect("/");
+            });
+        });
     });
-};
+}

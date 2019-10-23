@@ -8,7 +8,7 @@ var UserSchema = new Schema(
         last_name: {type: String, required: true, max: 100},
         username: {type: String, required: true, max: 100},
         password: {type: String, required: true, max: 100},
-        admin_status: {type: Boolean, required: true}
+        admin_status: {type: Boolean, required: true, default: false}
     }
 );
 
