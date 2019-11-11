@@ -6,19 +6,6 @@ const bcrypt = require('bcrypt');
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 
-// Display login form on GET
-exports.user_login_get = function(req, res) {
-    res.render('login_form', { title: 'Log In' });
-};
-
-// Handle login on POST
-exports.user_login_post =
-    passport.authenticate('local', { failureRedirect: '/login' }),
-    function(req, res) {
-    res.redirect('/');
-  };
-
-
 // Display sign up form on GET
 exports.user_signup_get = function(req, res) {
     res.render('signup_form', { title: 'Sign up' });
@@ -65,3 +52,15 @@ exports.user_signup_post = (req, res, next) => {
         });
     });
 }
+
+// Display login form on GET
+exports.user_login_get = function(req, res) {
+    res.render('login_form', { title: 'Log In' });
+};
+
+// Handle login on POST
+exports.user_login_post =
+    passport.authenticate('local', { failureRedirect: '/login' }),
+    function(req, res) {
+    res.render('login_form', { title: 'Log In' });
+  };
