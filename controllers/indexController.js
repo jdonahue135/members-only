@@ -59,8 +59,9 @@ exports.user_login_get = function(req, res) {
 };
 
 // Handle login on POST
-exports.user_login_post =
-    passport.authenticate('local', { failureRedirect: '/login' }),
-    function(req, res) {
-        res.render('login_form', { title: 'Log In' });
-  };
+exports.user_login_post = function(req, res, next) {
+    passport.authenticate('local', { 
+        failureRedirect: '/login',
+        successRedirect: '/' 
+    })(req, res, next)
+}
