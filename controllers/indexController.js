@@ -1,4 +1,4 @@
-var User = require('../models/user');
+const User = require('../models/user');
 
 const passport = require('passport');
 const bcrypt = require('bcrypt');
@@ -62,5 +62,5 @@ exports.user_login_get = function(req, res) {
 exports.user_login_post =
     passport.authenticate('local', { failureRedirect: '/login' }),
     function(req, res) {
-    res.render('login_form', { title: 'Log In' });
+        res.render('login_form', { title: 'Log In' });
   };

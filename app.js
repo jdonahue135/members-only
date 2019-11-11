@@ -7,47 +7,9 @@ var dotenv = require('dotenv');
 const session = require("express-session");
 
 const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
-const User = require('./models/user');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-var app = express();
 
 //Configure dotenv
 dotenv.config();
-
-//Configure passport
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-      done(err, user);
-  });
-});
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      bcrypt.compare(password, user.password, (err, res) => {
-          if (res) {
-            //passwords match, log user in.
-            return done(null, user);
-          }
-          else {
-            //passwords do not match.
-            return done(null, false, { msg: "Incorrect password" });
-          }
-        });
-    });
-  }
-));
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
@@ -57,19 +19,37 @@ mongoose.connect(mongoDB, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+// Passport configuration
+require('./config/passport')(passport)
+
+//Authentication configuraiton????
+
+//Create app
+var app = express();
+
+//Configure routes
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+/* MIDDLEWARES */
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Session must come before passport
 app.use(session({ secret: "guest", resave: false, saveUninitialized: true }));
+
+//Passport middleware, in correct order
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+
+app.use(logger('dev'));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

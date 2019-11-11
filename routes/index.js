@@ -6,7 +6,7 @@ var index_controller = require('../controllers/indexController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Members-Only' });
 });
 
 // GET sign up form
