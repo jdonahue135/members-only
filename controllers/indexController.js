@@ -79,11 +79,12 @@ exports.join_get = function(req, res) {
 
 // Handle join on POST
 exports.join_post = function(req, res, next) {
-    // Validate field
+    
+    // Validate field.
     body('code').trim().isLength({ min: 1 }).withMessage('Secret Code must be specified.')
         .isAlphanumeric().withMessage('Secret Code has non-alphanumeric characters.')
 
-    // Sanitize fields.
+    // Sanitize field.
     sanitizeBody('code').escape()
 
     // Verify secret code.
@@ -91,10 +92,19 @@ exports.join_post = function(req, res, next) {
         res.redirect("/join");
     }
     else {
-        User.findById(req.params._id, function (err, user, next) {
-            if (err) {return next(err)};
-            user.membership_status = true;
-            res.redirect('/');
+        const user = new User({
+            username: req.body.username,
+            password: req.body.password,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            membership_status: true,
+            admin_status: req.body.admin_status,
+            _id:req.params.id //This is required, or a new ID will be assigned!
         })
+        User.findByIdAndUpdate(req.params.id, user, {}, function(err, theuser) {
+            if (err) { return next(err); }
+               // Successful
+               res.redirect('/');
+            })
     }
-}
+};
