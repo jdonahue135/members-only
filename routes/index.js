@@ -6,7 +6,7 @@ var index_controller = require('../controllers/indexController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Members-Only' });
+  res.render('index', { title: 'Members-Only', user: req.user });
 });
 
 // GET sign up form
@@ -20,5 +20,8 @@ router.get('/login',  index_controller.user_login_get);
 
 // POST request to login
 router.post('/login',  index_controller.user_login_post);
+
+// POST request to logout
+router.post('/logout', index_controller.user_logout_post);
 
 module.exports = router;

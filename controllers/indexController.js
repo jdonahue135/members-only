@@ -65,3 +65,9 @@ exports.user_login_post = function(req, res, next) {
         successRedirect: '/' 
     })(req, res, next)
 }
+
+//Handle logout on post
+exports.user_logout_post = function(req, res, next) {
+    req.logout();
+    res.redirect('/login');
+}

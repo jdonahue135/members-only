@@ -16,12 +16,11 @@ html(lang='en')
             ul(class='sidebar-nav')
               li 
                 a(href='/') Home
-              li 
-                a(href='/login') Login
-              li 
+              if (!user)
+                li 
+                  a(href='/login') Login
+                li 
                 a(href='/signup') Sign up
-              li 
-                a(href='/catalog/genres') All genres
               li 
                 hr
               li 
