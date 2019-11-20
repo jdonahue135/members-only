@@ -71,3 +71,30 @@ exports.user_logout = function(req, res) {
     req.logout();
     res.redirect('/');
 }
+
+// Display join form on GET
+exports.join_get = function(req, res) {
+    res.render('join_form', { title: 'Join the Club!' });
+};
+
+// Handle join on POST
+exports.join_post = function(req, res, next) {
+    // Validate field
+    body('code').trim().isLength({ min: 1 }).withMessage('Secret Code must be specified.')
+        .isAlphanumeric().withMessage('Secret Code has non-alphanumeric characters.')
+
+    // Sanitize fields.
+    sanitizeBody('code').escape()
+
+    // Verify secret code.
+    if (req.body.code !== 'guest') {
+        res.redirect("/join");
+    }
+    else {
+        User.findById(req.params._id, function (err, user, next) {
+            if (err) {return next(err)};
+            user.membership_status = true;
+            res.redirect('/');
+        })
+    }
+}

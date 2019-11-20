@@ -24,4 +24,11 @@ router.post('/login',  index_controller.user_login_post);
 // POST request to logout
 router.get('/logout', index_controller.user_logout);
 
+// GET request to join club
+router.get('/join',  index_controller.join_get);
+
+// POST request to join club
+router.post('/join',  index_controller.join_post);
+
+
 module.exports = router;
