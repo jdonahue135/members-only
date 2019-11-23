@@ -45,6 +45,8 @@ exports.user_signup_post = (req, res, next) => {
               password: hashedPassword,
               first_name: req.body.first_name,
               last_name: req.body.last_name,
+              admin_status: false,
+              membership_status: false
             }).save(err => {
               if (err) return next(err);
               res.redirect("/");
@@ -93,18 +95,19 @@ exports.join_post = function(req, res, next) {
     }
     else {
         const user = new User({
-            username: req.body.username,
-            password: req.body.password,
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
+            username: req.user.username,
+            password: req.user.password,
+            first_name: req.user.first_name,
+            last_name: req.user.last_name,
             membership_status: true,
-            admin_status: req.body.admin_status,
-            _id:req.params.id //This is required, or a new ID will be assigned!
+            admin_status: req.user.admin_status,
+            _id:req.user.id //This is required, or a new ID will be assigned!
         })
-        User.findByIdAndUpdate(req.params.id, user, {}, function(err, theuser) {
-            if (err) { return next(err); }
-               // Successful
-               res.redirect('/');
+        console.log(user);
+        User.findByIdAndUpdate(req.user.id, user, {}, function(err, theuser) {
+                if (err) { return next(err); }
+                // Successful
+                res.redirect('/');
             })
     }
 };
