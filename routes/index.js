@@ -3,6 +3,8 @@ var router = express.Router();
 
 // Require controller modules
 var index_controller = require('../controllers/indexController');
+var message_controller = require('../controllers/messageController');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -35,6 +37,12 @@ router.get('/admin',  index_controller.admin_get);
 
 // POST request to become admin
 router.post('/admin',  index_controller.admin_post);
+
+// GET message create form
+router.get('/message/create',  message_controller.create_get);
+
+// POST request to create message
+router.post('/message/create',  message_controller.create_post);
 
 
 

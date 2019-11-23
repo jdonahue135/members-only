@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 var Schema = mongoose.Schema;
 
@@ -12,7 +13,7 @@ var MessageSchema = new Schema(
 );
 
 //Virtual for formatted timestamp
-BookInstanceSchema
+MessageSchema
 .virtual('timestamp_formatted')
 .get(function () {
   return moment(this.timestamp).format('LLLL');
