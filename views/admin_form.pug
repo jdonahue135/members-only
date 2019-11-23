@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    h1= title
+
+    form(method='POST' action='')
+        div.form-group
+            label(for='code') Secret Code (can't be "guest" again, right?):
+            input#code.form-control(type='text', placeholder='Secret Code' name='code' required='true' )
+        div.form-group
+            button.btn.btn-primary(type='submit') Become admin
+    if errors 
+        ul
+            for error in errors
+                li!= error.msg

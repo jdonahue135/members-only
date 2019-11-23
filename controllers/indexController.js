@@ -103,7 +103,43 @@ exports.join_post = function(req, res, next) {
             admin_status: req.user.admin_status,
             _id:req.user.id //This is required, or a new ID will be assigned!
         })
-        console.log(user);
+        User.findByIdAndUpdate(req.user.id, user, {}, function(err, theuser) {
+                if (err) { return next(err); }
+                // Successful
+                res.redirect('/');
+            })
+    }
+};
+
+// Display admin form on GET
+exports.admin_get = function(req, res) {
+    res.render('admin_form', { title: 'Become an admin!' });
+};
+
+// Handle admin on POST
+exports.admin_post = function(req, res, next) {
+    
+    // Validate field.
+    body('code').trim().isLength({ min: 1 }).withMessage('Secret Code must be specified.')
+        .isAlphanumeric().withMessage('Secret Code has non-alphanumeric characters.')
+
+    // Sanitize field.
+    sanitizeBody('code').escape()
+
+    // Verify secret code.
+    if (req.body.code !== 'guest') {
+        res.redirect("/admin");
+    }
+    else {
+        const user = new User({
+            username: req.user.username,
+            password: req.user.password,
+            first_name: req.user.first_name,
+            last_name: req.user.last_name,
+            membership_status: req.user.membership_status,
+            admin_status: true,
+            _id:req.user.id //This is required, or a new ID will be assigned!
+        })
         User.findByIdAndUpdate(req.user.id, user, {}, function(err, theuser) {
                 if (err) { return next(err); }
                 // Successful

@@ -30,5 +30,12 @@ router.get('/join',  index_controller.join_get);
 // POST request to join club
 router.post('/join',  index_controller.join_post);
 
+// GET request to become admin
+router.get('/admin',  index_controller.admin_get);
+
+// POST request to become admin
+router.post('/admin',  index_controller.admin_post);
+
+
 
 module.exports = router;
