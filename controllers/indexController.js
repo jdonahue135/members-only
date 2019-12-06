@@ -15,7 +15,7 @@ exports.index = (req, res, next) => {
         .populate('user')
         .exec(function(err, list_messages) {
             if (err) return next(err)
-            res.render('index', { title: 'Members-Only', message_list: list_messages })
+            res.render('index', { title: 'Members-Only', message_list: list_messages, user: req.user })
         });
     }
     else {
