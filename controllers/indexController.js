@@ -116,7 +116,7 @@ exports.join_post = function(req, res, next) {
 
 // Display admin form on GET
 exports.admin_get = function(req, res) {
-    if (!req.user) {
+    if (!req.user || req.user.membership_status == false) {
         res.redirect('/')
     }
     res.render('admin_form', { title: 'Become an admin!' });
