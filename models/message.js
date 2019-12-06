@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var MessageSchema = new Schema(
     {
         title: {type: String, required: true, max: 100},
-        timestamp: {type: Date, required: true, value: Date.now},
+        timestamp: {type: Date, default: Date.now},
         text: {type: String, required: true, max: 100},
         user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     }

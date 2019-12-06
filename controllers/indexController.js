@@ -76,6 +76,9 @@ exports.user_logout = function(req, res) {
 
 // Display join form on GET
 exports.join_get = function(req, res) {
+    if (!req.user) {
+        res.redirect('/')
+    }
     res.render('join_form', { title: 'Join the Club!' });
 };
 
@@ -113,6 +116,9 @@ exports.join_post = function(req, res, next) {
 
 // Display admin form on GET
 exports.admin_get = function(req, res) {
+    if (!req.user) {
+        res.redirect('/')
+    }
     res.render('admin_form', { title: 'Become an admin!' });
 };
 
