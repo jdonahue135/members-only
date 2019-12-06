@@ -6,6 +6,7 @@ block content
   if (message_list)
     p Messages:
     ul
+      - message_list.sort(function(a, b) { let dateA = a.date; let dateB = b.date; return (dateA < dateB) ? -1 : (dateA > dateB) ? 1 : 0;})
       each message in message_list
         li
           h2 #{message.title}
