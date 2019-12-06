@@ -7,9 +7,7 @@ var message_controller = require('../controllers/messageController');
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Members-Only', user: req.user });
-});
+router.get('/', index_controller.index);
 
 // GET sign up form
 router.get('/signup',  index_controller.user_signup_get);

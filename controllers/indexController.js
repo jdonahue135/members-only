@@ -1,10 +1,27 @@
 const User = require('../models/user');
+const Message = require('../models/message')
 
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
+
+// Display index page on GET
+exports.index = (req, res, next) => {
+    // Get list of messages
+    if (req.user) {
+        Message.find({})
+        .populate('user')
+        .exec(function(err, list_messages) {
+            if (err) return next(err)
+            res.render('index', { title: 'Members-Only', message_list: list_messages })
+        });
+    }
+    else {
+        res.render('index', { title: 'Members-Only' })
+    }
+}
 
 // Display sign up form on GET
 exports.user_signup_get = function(req, res) {

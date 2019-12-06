@@ -3,5 +3,10 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  if (user)
+  if (message_list)
     p Messages:
+    ul
+      each message in message_list
+        li
+          h2 #{message.title}
+            h3 #{message.user.username} said #{message.text} at #{message.timestamp_formatted}

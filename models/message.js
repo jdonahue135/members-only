@@ -16,7 +16,7 @@ var MessageSchema = new Schema(
 MessageSchema
 .virtual('timestamp_formatted')
 .get(function () {
-  return moment(this.timestamp).format('LLLL');
+  return moment(this.timestamp).format('LT ll');
 });
 
 //Export model
