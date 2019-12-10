@@ -6,7 +6,7 @@ const { sanitizeBody } = require('express-validator/filter');
 
 // Display create message form on GET
 exports.create_get = function(req, res) {
-    if (!req.user || req.user.membership_status == false) {
+    if (!req.user) {
         res.redirect('/')
     }
     res.render('message_form', { title: 'Create message' });
