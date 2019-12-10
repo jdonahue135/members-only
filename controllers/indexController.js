@@ -19,7 +19,7 @@ exports.index = (req, res, next) => {
         });
     }
     else {
-        res.render('index', { title: 'Members-Only' })
+        res.render('index', { title: 'Members-Only', user: req.user })
     }
 }
 

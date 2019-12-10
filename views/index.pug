@@ -10,4 +10,10 @@ block content
       each message in message_list
         li
           h2 #{message.title}
-            h3 #{message.user.username} said #{message.text} at #{message.timestamp_formatted}
+            if (user.membership_status == true)
+              h3 #{message.user.username} said #{message.text} at #{message.timestamp_formatted}
+            else
+              h3 A user said #{message.text} at none-of-your-business o'clock.
+            if (user.admin_status == true)
+              div.form-group
+                button.btn.btn-primary(type='submit') Delete
