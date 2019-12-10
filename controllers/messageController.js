@@ -35,7 +35,7 @@ exports.create_post = function(req, res, next) {
 };
 
 // Display delete message form on GET
-exports.delete_get = function(req, res) {
+exports.delete_get = function(req, res, next) {
     if (!req.user || req.user.admin_status == false) {
         res.redirect('/');
     }
@@ -49,5 +49,13 @@ exports.delete_get = function(req, res) {
 
 // Handle message delete on POST
 exports.delete_post = function(req, res, next) {
-    //TODO
+    if (!req.user || req.user.admin_status == false) {
+        res.redirect('/');
+    }
+    Message.findByIdAndDelete(req.params.id)
+    .exec(function (err) {
+        if (err) return next(err);
+        //successful, redirect.
+        res.redirect('/');
+    })
 }
