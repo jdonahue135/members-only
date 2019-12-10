@@ -19,5 +19,12 @@ MessageSchema
   return moment(this.timestamp).format('LT ll');
 });
 
+//Virtual for message url
+MessageSchema
+.virtual('url')
+.get(function () {
+  return '/message/' + this._id;
+});
+
 //Export model
 module.exports = mongoose.model('Message', MessageSchema);

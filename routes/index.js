@@ -42,6 +42,11 @@ router.get('/message/create',  message_controller.create_get);
 // POST request to create message
 router.post('/message/create',  message_controller.create_post);
 
+//GET message delete page
+router.get('/message/:id/delete', message_controller.delete_get);
+
+//POST message delete page
+router.post('/message/:id/delete', message_controller.delete_post);
 
 
 module.exports = router;

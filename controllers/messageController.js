@@ -7,7 +7,7 @@ const { sanitizeBody } = require('express-validator/filter');
 // Display create message form on GET
 exports.create_get = function(req, res) {
     if (!req.user) {
-        res.redirect('/')
+        res.redirect('/');
     }
     res.render('message_form', { title: 'Create message' });
 };
@@ -33,3 +33,21 @@ exports.create_post = function(req, res, next) {
         res.redirect("/");
     });
 };
+
+// Display delete message form on GET
+exports.delete_get = function(req, res) {
+    if (!req.user || req.user.admin_status == false) {
+        res.redirect('/');
+    }
+    Message.findById(req.params.id)
+    .exec(function (err, the_message) {
+        if (err) return next(err);
+        //successful, so render.
+        res.render('message_delete', { message: the_message, title: 'Delete Message' });
+    })
+}
+
+// Handle message delete on POST
+exports.delete_post = function(req, res, next) {
+    //TODO
+}

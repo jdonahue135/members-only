@@ -16,4 +16,4 @@ block content
               h3 A user said #{message.text} at none-of-your-business o'clock.
             if (user.admin_status == true)
               div.form-group
-                button.btn.btn-primary(type='submit') Delete
+                a(class='button' type='submit' href=message.url+'/delete') Delete
