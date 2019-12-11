@@ -9,7 +9,7 @@ const session = require("express-session");
 const passport = require('passport')
 
 //Configure dotenv
-dotenv.config();
+dotenv.config({ path: 'ENV_FILENAME' });
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
