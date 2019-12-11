@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv');
 const session = require("express-session");
+var compression = require('compression');
+var helmet = require('helmet');
 
 const passport = require('passport')
 
@@ -26,6 +28,9 @@ require('./config/passport')(passport)
 
 //Create app
 var app = express();
+
+app.use(compression()); //Compress all routes
+app.use(helmet());
 
 //Configure routes
 var indexRouter = require('./routes/index');
