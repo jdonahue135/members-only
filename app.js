@@ -5,8 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv');
 const session = require("express-session");
-var compression = require('compression');
-var helmet = require('helmet');
 
 const passport = require('passport')
 
@@ -24,13 +22,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // Passport configuration
 require('./config/passport')(passport)
 
-//Authentication configuraiton????
-
 //Create app
 var app = express();
-
-app.use(compression()); //Compress all routes
-app.use(helmet());
 
 //Configure routes
 var indexRouter = require('./routes/index');
