@@ -13,7 +13,7 @@ dotenv.config({ path: 'ENV_FILENAME' });
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var dev_db_url = process.env.DB_URL;
+var dev_db_url = 'mongodb+srv://user:user@cluster0-pluph.azure.mongodb.net/test?retryWrites=true&w=majority'
 var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 var db = mongoose.connection;
