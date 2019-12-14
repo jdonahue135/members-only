@@ -1,0 +1,1 @@
+Create a membership message board web app as part of The Odin Project's Curriculum (https://www.theodinproject.com/courses/nodejs/lessons/members-only)
